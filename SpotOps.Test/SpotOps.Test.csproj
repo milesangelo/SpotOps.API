@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SpotOps.Api\SpotOps.Api.csproj" />
+    <ProjectReference Include="..\SpotOps.Api.csproj" />
   </ItemGroup>
 
 </Project>

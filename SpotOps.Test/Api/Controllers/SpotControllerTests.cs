@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using SpotOps.Api.Controllers;
-using SpotOps.Api.Models.ResponseModels;
+using SpotOps.Api.Models.Rest;
 using SpotOps.Api.Services;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace SpotOps.Test.Api.Controllers
         {
             var spotController = new SpotsController(new MockSpotResponseService());
 
-            var spotResponse = new SpotResponse() 
+            var spotResponse = new SpotRequest() 
             { 
                 Name = "test",
                 DateCreated = DateTime.Now,
