@@ -1,14 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
+using System;
 using SpotOps.Api.Controllers;
 using SpotOps.Api.Models.Rest;
 using SpotOps.Api.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace SpotOps.Test.Api.Controllers
 {
