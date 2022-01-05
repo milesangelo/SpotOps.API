@@ -5,3 +5,5 @@ bin
 obj
 packages
 /.vs/SpotOps.Api
+app.db
+
