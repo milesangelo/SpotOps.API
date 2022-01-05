@@ -6,4 +6,6 @@ obj
 packages
 /.vs/SpotOps.Api
 app.db
+app.db-shm
+app.db-wal
 
