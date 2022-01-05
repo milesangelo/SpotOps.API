@@ -1,6 +1,7 @@
 ﻿using SpotOps.Api.Models.Rest;
 using SpotOps.Api.Services.Interfaces;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SpotOps.Api.Services
 {
@@ -17,7 +18,7 @@ namespace SpotOps.Api.Services
         {
             spotResponse.Id = _context.Count + 1;
              _context.Add(_context.Count + 1, spotResponse);
-            return Task.FromResult<SpotRequest>(spotResponse);
+            return Task.FromResult(spotResponse);
         }
     }
 }

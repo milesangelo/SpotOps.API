@@ -1,4 +1,7 @@
-﻿namespace SpotOps.Api.Models.Rest
+﻿using System;
+using Microsoft.AspNetCore.Http;
+
+namespace SpotOps.Api.Models.Rest
 {
     public class SpotRequest
     {

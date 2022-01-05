@@ -1,4 +1,5 @@
 ﻿
+using System.Threading.Tasks;
 using SpotOps.Api.Models.Rest;
 
 namespace SpotOps.Api.Services.Interfaces
@@ -10,7 +11,6 @@ namespace SpotOps.Api.Services.Interfaces
         /// </summary>
         /// <param name="spotResponse"></param>
         /// <returns></returns>
-        /// <exception cref="Exception"></exception>
         Task<SpotRequest> Add(SpotRequest spotResponse);
     }
   
