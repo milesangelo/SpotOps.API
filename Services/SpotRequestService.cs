@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using SpotOps.Api.Data;
 using SpotOps.Api.Models;
@@ -23,7 +24,9 @@ namespace SpotOps.Api.Services
         {
             Spot newSpot = new Spot
             {
-                Name = spotResponse.Name
+                Name = spotResponse.Name,
+                Type = spotResponse.Type,
+                DateCreated = DateTime.Now,
             };
             await _context.AddAsync(newSpot);
             await _context.SaveChangesAsync();

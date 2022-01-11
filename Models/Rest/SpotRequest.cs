@@ -11,8 +11,6 @@ namespace SpotOps.Api.Models.Rest
 
         public string? Type { get; set; }
 
-        public DateTime DateCreated { get; set; }
-
         public string? FileName { get; set; }
 
         public IFormFile? FormFile { get; set; }

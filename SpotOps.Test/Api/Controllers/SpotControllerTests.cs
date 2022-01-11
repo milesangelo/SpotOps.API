@@ -16,10 +16,9 @@ namespace SpotOps.Test.Api.Controllers
             var spotController = new SpotsController(new MockSpotResponseService());
 
             var spotResponse = new SpotRequest() 
-            { 
-                Name = "test",
-                DateCreated = DateTime.Now,
+            {
                 Id = 1,
+                Name = "test",
                 Type = "testtype"
             };
 
