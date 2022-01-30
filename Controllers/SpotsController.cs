@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SpotOps.Api.Models.Rest;
@@ -7,6 +8,7 @@ using SpotOps.Api.Services.Interfaces;
 
 namespace SpotOps.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SpotsController : ControllerBase
@@ -27,7 +29,7 @@ namespace SpotOps.Api.Controllers
         /// </summary>
         /// <param name="spot"></param>
         /// <returns></returns>
-        [HttpPost("post")]
+        [HttpPost]
         public async Task<ActionResult> Post([FromForm] SpotRequest spot)
         {
             try
