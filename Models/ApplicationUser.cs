@@ -1,10 +1,12 @@
 using System;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Identity;
 
 namespace SpotOps.Api.Models;
 
 public class ApplicationUser : IdentityUser
 {
+    [JsonIgnore]
     public string? Password { get; set; }
     public string? PasswordSalt { get; set; }
     public string? FirstName { get; set; }
