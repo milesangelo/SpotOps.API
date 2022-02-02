@@ -66,6 +66,8 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddTransient<ISpotRequestService, SpotRequestService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -106,7 +108,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors();
+app.UseCors(options => options
+    //.WithOrigins(new [] {"http://localhost:3000", "http://localhost:8080", "http://localhost"})
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials()
+);
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
