@@ -1,19 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using SpotOps.Api.Constants;
-using SpotOps.Api.Helpers;
 using SpotOps.Api.Models;
 using SpotOps.Api.Services.Interfaces;
-using SpotOps.Api.Settings;
 using LoginModel = SpotOps.Api.Models.LoginModel;
 using RegisterModel = SpotOps.Api.Models.RegisterModel;
 
@@ -30,7 +24,7 @@ public class UserService : IUserService
     /// </summary>
     /// <param name="userManager"></param>
     /// <param name="roleManager"></param>
-    /// <param name="jwt"></param>
+    /// <param name="jwtService"></param>
     public UserService(
         UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager,
@@ -66,7 +60,7 @@ public class UserService : IUserService
         }
         else if (result.Errors.Any())
         {
-            return $"Errors registering {user.UserName}: {string.Join(", ", result.Errors)}";
+            return $"{JsonConvert.SerializeObject(result)}";
         }
         return $"User Registered with username {user.UserName}";
     }
@@ -101,11 +95,6 @@ public class UserService : IUserService
         return $"Incorrect Credentials for user {user.Email}.";
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="model"></param>
-    /// <returns></returns>
     //public async Task<AuthenticationModel> GetTokenAsync(TokenRequestModel model)
     //{
     //    var authenticationModel = new AuthenticationModel();
@@ -161,7 +150,6 @@ public class UserService : IUserService
         var user = await _userManager.FindByEmailAsync(model.Email);
         if (user == null)
         {
-            
             authenticationModel.IsAuthenticated = false;
             authenticationModel.Message = $"No Accounts Registered with {model.Email}.";
             return authenticationModel;
@@ -173,6 +161,7 @@ public class UserService : IUserService
             authenticationModel.IsAuthenticated = true;
             var jwt = await CreateJwtToken(user);
             authenticationModel.Token = _jwtService.WriteToken(jwt);
+            authenticationModel.Name = user.FirstName;
             authenticationModel.Email = user.Email;
             authenticationModel.UserName = user.UserName;
             var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
@@ -186,9 +175,9 @@ public class UserService : IUserService
     }
 
     /// <summary>
-    /// 
+    /// Gets user using JWT token.
     /// </summary>
-    /// <param name="userId"></param>
+    /// <param name="jwt"></param>
     /// <returns></returns>
     public async Task<ApplicationUser?> GetUserFromJwtAsync(string jwt)
     {
@@ -203,7 +192,7 @@ public class UserService : IUserService
     }
 
     /// <summary>
-    /// 
+    /// TODO, handle logging out.
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>

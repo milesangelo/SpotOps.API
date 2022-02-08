@@ -65,12 +65,6 @@ public class UserController : ControllerBase
     {
         var result = await _userService.LoginAsync(model);
 
-        Response.Cookies.Append("jwt", result.Token,
-            new CookieOptions
-            {
-                HttpOnly = true
-            });
-
         return Ok(result);
     }
 
