@@ -42,3 +42,4 @@ and then apply migrations schema to database:
 
  - Add a spot
  - Edit a spot
+ - 🎨 Update tests 
