@@ -1,19 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using SpotOps.Api.Constants;
 using SpotOps.Api.Models;
-using Newtonsoft.Json;
 using SpotOps.Api.Services.Interfaces;
-using LoginModel = SpotOps.Api.Models.LoginModel;
-using RegisterModel = SpotOps.Api.Models.RegisterModel;
 
 namespace SpotOps.Api.Services;
 
@@ -24,7 +17,6 @@ public class UserService : IUserService
     private readonly UserManager<ApplicationUser> _userManager;
 
     /// <summary>
-    /// 
     /// </summary>
     /// <param name="userManager"></param>
     /// <param name="roleManager"></param>
@@ -40,7 +32,7 @@ public class UserService : IUserService
     }
 
     /// <summary>
-    /// Registers user as ApplicationUser.
+    ///     Registers user as ApplicationUser.
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
@@ -54,33 +46,25 @@ public class UserService : IUserService
             LastName = model.LastName
         };
         var userWithSameEmail = await _userManager.FindByEmailAsync(model.Email);
-        
+
         if (userWithSameEmail != null) return $"Email {user.Email} is already registered.";
-        
+
         var result = await _userManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
-        {
             await _userManager.AddToRoleAsync(user, Authorization.default_role.ToString());
-        }
-        else if (result.Errors.Any())
-        {
-            return $"{JsonConvert.SerializeObject(result)}";
-        }
+        else if (result.Errors.Any()) return $"{JsonConvert.SerializeObject(result)}";
         return $"User Registered with username {user.UserName}";
     }
 
     /// <summary>
-    /// Adds role for specified user.
+    ///     Adds role for specified user.
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
     public async Task<string> AddRoleAsync(AddRoleModel model)
     {
         var user = await _userManager.FindByEmailAsync(model.Email);
-        if (user == null)
-        {
-            return $"No Accounts Registered with {model.Email}.";
-        }
+        if (user == null) return $"No Accounts Registered with {model.Email}.";
 
         if (await _userManager.CheckPasswordAsync(user, model.Password))
         {
@@ -99,52 +83,7 @@ public class UserService : IUserService
         return $"Incorrect Credentials for user {user.Email}.";
     }
 
-    //public async Task<AuthenticationModel> GetTokenAsync(TokenRequestModel model)
-    //{
-    //    var authenticationModel = new AuthenticationModel();
-    //    var user = await _userManager.FindByEmailAsync(model.Email);
-    //    if (user == null)
-    //    {
-    //        authenticationModel.IsAuthenticated = false;
-    //        authenticationModel.Message = $"No Accounts Registered with {model.Email}.";
-    //        return authenticationModel;
-    //    }
-
-    //    if (await _userManager.CheckPasswordAsync(user, model.Password))
-    //    {
-    //        authenticationModel.IsAuthenticated = true;
-    //        //JwtSecurityToken jwtSecurityToken = await CreateJwtToken(user);
-    //        //authenticationModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-    //        authenticationModel.Token = _jwtService.Generate(user.Id);
-    //        authenticationModel.Email = user.Email;
-    //        authenticationModel.UserName = user.UserName;
-    //        var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
-    //        authenticationModel.Roles = rolesList.ToList();
-    //        return authenticationModel;
-    //    }
-
-    //    authenticationModel.IsAuthenticated = false;
-    //    authenticationModel.Message = $"Incorrect Credentials for user {user.Email}.";
-    //    return authenticationModel;
-    //}
-
     /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="user"></param>
-    /// <returns></returns>
-    private async Task<JwtSecurityToken> CreateJwtToken(ApplicationUser user)
-    {
-
-        var userClaims = await _userManager.GetClaimsAsync(user);
-        var roles = await _userManager.GetRolesAsync(user);
-
-        return _jwtService.Generate(user, userClaims, roles);
-
-    }
-
-    /// <summary>
-    /// 
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
@@ -179,20 +118,60 @@ public class UserService : IUserService
     }
 
     /// <summary>
-    /// Gets user using JWT token.
+    ///     Gets user using JWT token.
     /// </summary>
     /// <param name="jwt"></param>
     /// <returns></returns>
     public async Task<ApplicationUser?> GetUserFromJwtAsync(string jwt)
     {
-        JwtSecurityToken jwtSecurityToken = _jwtService.Verify(jwt);
+        var jwtSecurityToken = _jwtService.Verify(jwt);
         ApplicationUser? user = null;
 
-        if (int.TryParse(jwtSecurityToken.Issuer, out int userId)) {
+        if (int.TryParse(jwtSecurityToken.Issuer, out var userId))
             user = await _userManager.FindByIdAsync(userId.ToString());
-        }
 
         return user ?? null;
+    }
+
+    //public async Task<AuthenticationModel> GetTokenAsync(TokenRequestModel model)
+    //{
+    //    var authenticationModel = new AuthenticationModel();
+    //    var user = await _userManager.FindByEmailAsync(model.Email);
+    //    if (user == null)
+    //    {
+    //        authenticationModel.IsAuthenticated = false;
+    //        authenticationModel.Message = $"No Accounts Registered with {model.Email}.";
+    //        return authenticationModel;
+    //    }
+
+    //    if (await _userManager.CheckPasswordAsync(user, model.Password))
+    //    {
+    //        authenticationModel.IsAuthenticated = true;
+    //        //JwtSecurityToken jwtSecurityToken = await CreateJwtToken(user);
+    //        //authenticationModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+    //        authenticationModel.Token = _jwtService.Generate(user.Id);
+    //        authenticationModel.Email = user.Email;
+    //        authenticationModel.UserName = user.UserName;
+    //        var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
+    //        authenticationModel.Roles = rolesList.ToList();
+    //        return authenticationModel;
+    //    }
+
+    //    authenticationModel.IsAuthenticated = false;
+    //    authenticationModel.Message = $"Incorrect Credentials for user {user.Email}.";
+    //    return authenticationModel;
+    //}
+
+    /// <summary>
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    private async Task<JwtSecurityToken> CreateJwtToken(ApplicationUser user)
+    {
+        var userClaims = await _userManager.GetClaimsAsync(user);
+        var roles = await _userManager.GetRolesAsync(user);
+
+        return _jwtService.Generate(user, userClaims, roles);
     }
 
     /// <summary>
@@ -201,8 +180,8 @@ public class UserService : IUserService
     /// <param name="model"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public Task<string> LogoutAsync(LogoutModel model)
-    {
-        throw new NotImplementedException();
-    }
+    // public Task<string> LogoutAsync(LogoutModel model)
+    // {
+    //     throw new NotImplementedException();
+    // }
 }

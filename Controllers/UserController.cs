@@ -1,12 +1,7 @@
-using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
-using SpotOps.Api.Helpers;
 using SpotOps.Api.Models;
 using SpotOps.Api.Services.Interfaces;
-using SpotOps.Api.Settings;
 
 namespace SpotOps.Api.Controllers;
 
@@ -65,7 +60,7 @@ public class UserController : ControllerBase
     }
 
     /// <summary>
-    /// Get user information
+    ///     Get user information
     /// </summary>
     /// <returns></returns>
     [HttpGet("user")]
@@ -77,7 +72,7 @@ public class UserController : ControllerBase
     }
 
     /// <summary>
-    /// Logout endpoint
+    ///     Logout endpoint
     /// </summary>
     /// <returns></returns>
     [HttpPost("logout")]
@@ -90,5 +85,4 @@ public class UserController : ControllerBase
             message = "Success"
         });
     }
-
 }

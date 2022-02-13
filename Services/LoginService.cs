@@ -45,10 +45,8 @@ public class LoginService
         }
 
         if (result.IsLockedOut)
-        {
             _logger.LogWarning(LoggerEventIds.UserLockout, "User account locked out.");
-            //return ""RedirectToPage("./Lockout");
-        }
+        //return ""RedirectToPage("./Lockout");
 
         return new OkResult();
     }
