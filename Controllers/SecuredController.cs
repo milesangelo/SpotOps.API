@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SpotOps.Api.Controllers;
 
-[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class SecuredController : ControllerBase
 {
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetSecuredData()
     {
