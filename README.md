@@ -33,3 +33,12 @@ or remove the most recent:
 and then apply migrations schema to database:
 
     dotnet ef database update
+    
+    
+## The ever changing to-do list
+
+
+### SpotController
+
+ - Add a spot
+ - Edit a spot
