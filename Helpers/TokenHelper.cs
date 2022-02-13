@@ -34,7 +34,7 @@ public class TokenHelper
 
         var claimsIdentity = new ClaimsIdentity(new[]
         {
-            new Claim(ClaimTypes.NameIdentifier, appUser.Id.ToString()),
+            new Claim(ClaimTypes.NameIdentifier, appUser.Id),
             new Claim("IsBlocked", appUser.Blocked.ToString())
         });
         var signingCredentials =
@@ -46,7 +46,7 @@ public class TokenHelper
             Issuer = Issuer,
             Audience = Audience,
             Expires = DateTime.Now.AddMinutes(15),
-            SigningCredentials = signingCredentials,
+            SigningCredentials = signingCredentials
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);

@@ -10,21 +10,21 @@ namespace SpotOps.Api.Controllers;
 public class UserController : ControllerBase
 {
     /// <summary>
-    /// The user service.
+    ///     The user service.
     /// </summary>
     private readonly IUserService _userService;
-    
+
     /// <summary>
-    /// Constructs a User Controller to use the given IUserService object.
+    ///     Constructs a User Controller to use the given IUserService object.
     /// </summary>
     /// <param name="userService"></param>
     public UserController(IUserService userService)
     {
         _userService = userService;
     }
-    
+
     /// <summary>
-    /// Asynchronously registers a user using RegisterModel object.
+    ///     Asynchronously registers a user using RegisterModel object.
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
@@ -34,9 +34,9 @@ public class UserController : ControllerBase
         var result = await _userService.RegisterAsync(model);
         return Ok(result);
     }
-    
+
     /// <summary>
-    /// Asynchronously gets token for given TokenRequestModel object.
+    ///     Asynchronously gets token for given TokenRequestModel object.
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
@@ -46,11 +46,11 @@ public class UserController : ControllerBase
         var result = await _userService.GetTokenAsync(model);
         return Ok(result);
     }
-    
+
     /// <summary>
-    /// Asynchronously adds role using AddRoleModel object data.
+    ///     Asynchronously adds role using AddRoleModel object data.
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="model">AddRoleModel containing user info.</param>
     /// <returns></returns>
     [HttpPost("addrole")]
     public async Task<IActionResult> AddRoleAsync(AddRoleModel model)

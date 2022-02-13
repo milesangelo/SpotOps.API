@@ -17,9 +17,9 @@ namespace SpotOps.Api.Services;
 
 public class UserService : IUserService
 {
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
     private readonly JwtOptions _jwt;
+    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly UserManager<ApplicationUser> _userManager;
 
     public UserService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
         IOptions<JwtOptions> jwt)
@@ -39,28 +39,20 @@ public class UserService : IUserService
             LastName = model.LastName
         };
         var userWithSameEmail = await _userManager.FindByEmailAsync(model.Email);
-        
+
         if (userWithSameEmail != null) return $"Email {user.Email} is already registered.";
-        
+
         var result = await _userManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
-        {
             await _userManager.AddToRoleAsync(user, Authorization.default_role.ToString());
-        }
-        else if (result.Errors.Any())
-        {
-            return $"Errors registering {user.UserName}: {string.Join(", ", result.Errors)}";
-        }
+        else if (result.Errors.Any()) return $"Errors registering {user.UserName}: {string.Join(", ", result.Errors)}";
         return $"User Registered with username {user.UserName}";
     }
 
     public async Task<string> AddRoleAsync(AddRoleModel model)
     {
         var user = await _userManager.FindByEmailAsync(model.Email);
-        if (user == null)
-        {
-            return $"No Accounts Registered with {model.Email}.";
-        }
+        if (user == null) return $"No Accounts Registered with {model.Email}.";
 
         if (await _userManager.CheckPasswordAsync(user, model.Password))
         {
@@ -93,7 +85,7 @@ public class UserService : IUserService
         if (await _userManager.CheckPasswordAsync(user, model.Password))
         {
             authenticationModel.IsAuthenticated = true;
-            JwtSecurityToken jwtSecurityToken = await CreateJwtToken(user);
+            var jwtSecurityToken = await CreateJwtToken(user);
             authenticationModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
             authenticationModel.Email = user.Email;
             authenticationModel.UserName = user.UserName;
@@ -114,10 +106,7 @@ public class UserService : IUserService
 
         var roleClaims = new List<Claim>();
 
-        for (int i = 0; i < roles.Count; i++)
-        {
-            roleClaims.Add(new Claim("roles", roles[i]));
-        }
+        for (var i = 0; i < roles.Count; i++) roleClaims.Add(new Claim("roles", roles[i]));
 
         var claims = new[]
             {
@@ -133,9 +122,9 @@ public class UserService : IUserService
         var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
         var jwtSecurityToken = new JwtSecurityToken(
-            issuer: _jwt.Issuer,
-            audience: _jwt.Audience,
-            claims: claims,
+            _jwt.Issuer,
+            _jwt.Audience,
+            claims,
             expires: DateTime.UtcNow.AddMinutes(_jwt.DurationInMinutes),
             signingCredentials: signingCredentials);
         return jwtSecurityToken;

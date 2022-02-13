@@ -5,19 +5,19 @@ namespace SpotOps.Api.Models;
 public class AddRoleModel
 {
     /// <summary>
-    /// Email.
+    ///     Email.
     /// </summary>
     [Required]
     public string Email { get; set; }
-    
+
     /// <summary>
-    /// Password.
+    ///     Password.
     /// </summary>
     [Required]
     public string Password { get; set; }
-    
+
     /// <summary>
-    /// Role.
+    ///     Role.
     /// </summary>
     [Required]
     public string Role { get; set; }

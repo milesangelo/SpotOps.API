@@ -1,6 +1,4 @@
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
@@ -11,8 +9,8 @@ namespace SpotOps.Api.Services;
 
 public class LoginService
 {
-    private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly ILogger<LoginService> _logger;
+    private readonly SignInManager<ApplicationUser> _signInManager;
 
     public LoginService(SignInManager<ApplicationUser> signInManager, ILogger<LoginService> logger)
     {
@@ -36,12 +34,10 @@ public class LoginService
 
         // This doesn't count login failures towards account lockout
         // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-        var result = await _signInManager.PasswordSignInAsync(email, password, rememberMe, lockoutOnFailure: false);
+        var result = await _signInManager.PasswordSignInAsync(email, password, rememberMe, false);
         if (result.Succeeded)
-        {
             _logger.LogInformation(LoggerEventIds.UserLogin, "User logged in.");
-            //return LocalRedirect(returnUrl);
-        }
+        //return LocalRedirect(returnUrl);
 
         if (result.RequiresTwoFactor)
         {
@@ -52,11 +48,6 @@ public class LoginService
         {
             _logger.LogWarning(LoggerEventIds.UserLockout, "User account locked out.");
             //return ""RedirectToPage("./Lockout");
-        }
-        else
-        {
-            //ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-            //return Page();
         }
 
         return new OkResult();

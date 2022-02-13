@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,9 +14,9 @@ public class SecuredController : ControllerBase
     {
         return Ok("This Secured Data is available only for Authenticated Users.");
     }
-    
+
     [HttpPost]
-    [Authorize(Roles ="Administrator")]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> PostSecuredData()
     {
         return Ok("This Secured Data is available only for Authenticated Users.");

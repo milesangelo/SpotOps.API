@@ -6,7 +6,7 @@ namespace SpotOps.Api.Helpers;
 public class HashingHelper
 {
     /// <summary>
-    /// Create a new hash using password-Based Key Derivation Function 2.
+    ///     Create a new hash using password-Based Key Derivation Function 2.
     /// </summary>
     /// <param name="password"></param>
     /// <param name="salt"></param>

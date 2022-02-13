@@ -5,41 +5,34 @@ using SpotOps.Api.Helpers;
 using SpotOps.Api.Models.Auth;
 using SpotOps.Api.Services.Interfaces;
 
-namespace SpotOps.Api.Services
+namespace SpotOps.Api.Services;
+
+public class AuthService : IAuthService
 {
-    public class AuthService : IAuthService
+    private readonly ApplicationDbContext _context;
+
+    public AuthService(ApplicationDbContext context)
     {
-        private readonly ApplicationDbContext _context;
+        _context = context;
+    }
 
-        public AuthService(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+    public async Task<LoginResponse?> Login(LoginRequest loginRequest)
+    {
+        var user = _context.Users.SingleOrDefault(user =>
+            user.Active && user.UserName == loginRequest.Username);
 
-        public async Task<LoginResponse?> Login(LoginRequest loginRequest)
+        if (user == null) return null;
+
+        var passwordHash = HashingHelper.HashUsingPbkdf2(loginRequest.Password, user.PasswordSalt);
+
+        if (user.Password != passwordHash) return null;
+
+        var token = await Task.Run(() => TokenHelper.GenerateToken(user));
+
+        return new LoginResponse
         {
-            var user = _context.Users.SingleOrDefault(user =>
-                user.Active && user.UserName == loginRequest.Username);
-            
-            if (user == null)
-            {
-                return null;
-            }
-            
-            var passwordHash = HashingHelper.HashUsingPbkdf2(loginRequest.Password, user.PasswordSalt);
-            
-            if (user.Password != passwordHash)
-            {
-                return null;
-            }
-            
-            var token = await Task.Run(() => TokenHelper.GenerateToken(user));
-            
-            return new LoginResponse
-            {
-                Username = user.UserName, FirstName = user.FirstName, LastName = user.LastName,
-                Token = token
-            };
-        }
+            Username = user.UserName, FirstName = user.FirstName, LastName = user.LastName,
+            Token = token
+        };
     }
 }
