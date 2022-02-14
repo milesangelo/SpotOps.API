@@ -36,7 +36,7 @@ public class UserService : IUserService
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    public async Task<string> RegisterAsync(RegisterModel model)
+    public async Task<RegisterResponseModel> RegisterAsync(RegisterModel model)
     {
         var user = new ApplicationUser
         {
@@ -45,15 +45,34 @@ public class UserService : IUserService
             FirstName = model.FirstName,
             LastName = model.LastName
         };
+
+        var response = new RegisterResponseModel();
+
         var userWithSameEmail = await _userManager.FindByEmailAsync(model.Email);
 
-        if (userWithSameEmail != null) return $"Email {user.Email} is already registered.";
+        if (userWithSameEmail != null)
+        {
+            response.Message = $"Email {user.Email} is already registered.";
+            response.IsRegistered = false;
+            return response;
+        }
 
         var result = await _userManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
+        {
             await _userManager.AddToRoleAsync(user, Authorization.default_role.ToString());
-        else if (result.Errors.Any()) return $"{JsonConvert.SerializeObject(result)}";
-        return $"User Registered with username {user.UserName}";
+        }
+        else if (result.Errors.Any())
+        {
+            response.Message = $"{JsonConvert.SerializeObject(result.Errors.First().Description)}";
+            response.IsRegistered = false;
+            return response;
+        }
+
+        response.Message = $"User Registered with username {user.UserName}";
+        response.IsRegistered = true;
+
+        return response;
     }
 
     /// <summary>

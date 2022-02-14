@@ -9,7 +9,7 @@ public interface IUserService
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    Task<string> RegisterAsync(RegisterModel model);
+    Task<RegisterResponseModel> RegisterAsync(RegisterModel model);
 
     /// <summary>
     /// </summary>
