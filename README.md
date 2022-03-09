@@ -43,3 +43,12 @@ and then apply migrations schema to database:
  - Add a spot
  - Edit a spot
  - 🎨 Update tests 
+
+
+
+#### Developer setup
+
+- make sure you have .net 6 sdk installed
+- git clone the repo
+- download Rider on preferred IDE
+- download Postman for testing API endpoints
