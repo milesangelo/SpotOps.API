@@ -1,0 +1,15 @@
+[Unit]
+Description=SpotOps API .Net Web API
+
+[Service]
+WorkingDirectory=/var/www/
+ExecStart=/usr/bin/dotnet /var/www/SpotOps.Api.dll
+Restart=always
+KillSignal=SIGINT
+SyslogIdentifier=spotops.api
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+Environment=ASPNETCORE_URLS=http://*:80
+
+[Install]
+WantedBy=multi-user.target

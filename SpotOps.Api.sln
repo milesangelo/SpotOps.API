@@ -7,12 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotOps.Api", "SpotOps.Api.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpotOps.Test", "SpotOps.Test\SpotOps.Test.csproj", "{42474FA0-8D9D-4E19-8E97-920AA25A7FE4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNetCore.Identity", "..\aspnetcore\src\Identity\Core\src\Microsoft.AspNetCore.Identity.csproj", "{629366E5-F400-4F30-BCC9-59311FDB4869}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNetCore.Identity.EntityFrameworkCore", "..\aspnetcore\src\Identity\EntityFrameworkCore\src\Microsoft.AspNetCore.Identity.EntityFrameworkCore.csproj", "{B2C0FD7F-558F-4756-B933-58FA00807B62}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Identity.Core", "..\aspnetcore\src\Identity\Extensions.Core\src\Microsoft.Extensions.Identity.Core.csproj", "{21246445-5070-4FDA-AFE0-577CFA9835C6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,18 +21,6 @@ Global
 		{42474FA0-8D9D-4E19-8E97-920AA25A7FE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42474FA0-8D9D-4E19-8E97-920AA25A7FE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42474FA0-8D9D-4E19-8E97-920AA25A7FE4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{629366E5-F400-4F30-BCC9-59311FDB4869}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{629366E5-F400-4F30-BCC9-59311FDB4869}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{629366E5-F400-4F30-BCC9-59311FDB4869}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{629366E5-F400-4F30-BCC9-59311FDB4869}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2C0FD7F-558F-4756-B933-58FA00807B62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2C0FD7F-558F-4756-B933-58FA00807B62}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2C0FD7F-558F-4756-B933-58FA00807B62}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2C0FD7F-558F-4756-B933-58FA00807B62}.Release|Any CPU.Build.0 = Release|Any CPU
-		{21246445-5070-4FDA-AFE0-577CFA9835C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21246445-5070-4FDA-AFE0-577CFA9835C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21246445-5070-4FDA-AFE0-577CFA9835C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21246445-5070-4FDA-AFE0-577CFA9835C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
