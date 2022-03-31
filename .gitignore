@@ -12,3 +12,5 @@ app.db-shm
 app.db-wal
 /.idea
 
+appsettings.Production.json
+
