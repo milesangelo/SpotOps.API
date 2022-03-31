@@ -2,7 +2,7 @@
 
 namespace SpotOps.Api.Controllers;
 
-[Route("api/[controller]")]
+[Route("ping")]
 [ApiController]
 public class PingController: ControllerBase
 {

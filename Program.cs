@@ -18,8 +18,8 @@ using SpotOps.Api.Settings;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(
-        builder.Configuration.GetConnectionString("SpotContext")));
+    //options.UseSqlite(builder.Configuration.GetConnectionString("SqliteDevDb")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresDevDb")));
 
 builder.Services.AddIdentityCore<ApplicationUser>(cfg =>
     {

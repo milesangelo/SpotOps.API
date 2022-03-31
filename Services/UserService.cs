@@ -3,10 +3,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Newtonsoft.Json;
 using SpotOps.Api.Constants;
 using SpotOps.Api.Models;
 using SpotOps.Api.Services.Interfaces;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace SpotOps.Api.Services;
 
@@ -64,7 +64,7 @@ public class UserService : IUserService
         }
         else if (result.Errors.Any())
         {
-            response.Message = $"{JsonConvert.SerializeObject(result.Errors.First().Description)}";
+            response.Message = $"{JsonSerializer.Serialize(result.Errors.First().Description)}";
             response.IsRegistered = false;
             return response;
         }
