@@ -19,7 +19,7 @@ public class AuthService : IAuthService
     public async Task<LoginResponse?> Login(LoginRequest loginRequest)
     {
         var user = _context.Users.SingleOrDefault(user =>
-            user.Active && user.UserName == loginRequest.Username);
+            user.Active == 1 && user.UserName == loginRequest.Username);
 
         if (user == null) return null;
 

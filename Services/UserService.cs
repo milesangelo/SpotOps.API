@@ -43,7 +43,8 @@ public class UserService : IUserService
             UserName = model.Username,
             Email = model.Email,
             FirstName = model.FirstName,
-            LastName = model.LastName
+            LastName = model.LastName,
+            Active = 1,
         };
 
         var response = new RegisterResponseModel();
