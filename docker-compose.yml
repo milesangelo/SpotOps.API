@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  spotops-postgres:
+    image: postgres:12.9-alpine
+    container_name: spotops-postgres
+    restart: on-failure
+    environment:
+      - POSTGRES_DB=spotops_dev_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres-spotops-data:/data/db
+volumes:
+  postgres-spotops-data:
+    driver: local
