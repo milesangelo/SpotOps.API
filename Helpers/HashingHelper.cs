@@ -11,7 +11,7 @@ public class HashingHelper
     /// <param name="password"></param>
     /// <param name="salt"></param>
     /// <returns></returns>
-    public static string HashUsingPbkdf2(string password, string salt)
+    public static string HashUsingPbkdf2(string password, string? salt)
     {
         using var bytes =
             new Rfc2898DeriveBytes(password, Convert.FromBase64String(salt), 10000, HashAlgorithmName.SHA256);

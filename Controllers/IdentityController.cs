@@ -10,8 +10,7 @@
 // {
 //     [HttpGet]
 //     public IActionResult Get()
-//     {
-//         RegisterModel registerModel = RegisterModel();
+//     {//         RegisterModel registerModel = RegisterModel();
 //         registerModel.OnGetAsync()
 //         return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
 //     }

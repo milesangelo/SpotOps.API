@@ -5,8 +5,12 @@ bin
 obj
 packages
 /.vs/SpotOps.Api
+app
+out
 app.db
 app.db-shm
 app.db-wal
 /.idea
+
+appsettings.Production.json
 
